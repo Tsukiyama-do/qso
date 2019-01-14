@@ -1,0 +1,27 @@
+
+
+1. Main Menu
+2. Private QSO registration
+    key : CS-DATE-TIME
+    fields : CS, DATE, TIME, RTT, COUNTRY, PREF, CITY, ADD,  MHZ, BAND, REMARKS
+3. Private QSO reference
+4. Private login form
+5. Public QSO reference
+6. Public QSL registration
+
+-----
+menu on top
+1. About Radio station
+2. Topics
+3. Download QSL
+4. Upload QSL
+5. Contact Info
+
+-----
+
+
+pic * 2
+
+---------
+
+end  sitemap  Privacy policy

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ .title }}</title>
+    </head>
+    <body>
+      <h3>{{ .title }}</h3>
+
+      <form action="/" method="post">
+        <input type="text" name="text"></input>
+        <input type="submit" value="SUBMIT">
+      </form>
+
+          <ul>
+          {{ range $index, $task := .tasks }}
+
+              <li>No. {{$index }} : {{ $task.ID }}: {{ $task.Text }} </li>
+          {{ end }}
+          </ul>
+    </body>
+</html>

@@ -1,0 +1,79 @@
+<html lang="ja">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="description" content="月山堂">
+  <meta name="keywords" content="月山堂">
+
+  <title>{{ .title }} </title>
+
+
+
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/trontastic/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<!--
+  <script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+-->
+  <script type="text/javascript">
+
+  $(function() {
+    //↓と同じです。
+    $(".sample1").css("color", "#00f");
+    $(".sample1").click(function() {
+      $(".sample1").css("color", "#aaf");
+    });
+    $(".wkCheckBox").buttonset();
+    $(".wkRadio").buttonset();
+    $("#wkBtn1").button({
+      icons:{
+        primary:"ui-icon-home"
+      }
+    });
+    $("#wkBtn2").button({
+      icons:{
+        primary:"ui-icon-key"
+      }
+    });
+    $("#wkBtn3").button({
+      icons:{
+        primary:"ui-icon-suitcase"
+      }
+    });
+  });
+
+  </script>
+
+</head>
+<body>
+  <p>
+
+  </p>
+  <p class="sample1">ここの色が変わるはず。
+  </p>
+  <div class="wkCheckBox" style="background-color:#CCC; display:inline-flex; padding : 20px;">
+  <input id="cb1" type="checkbox"><label for="cb1">Check1</label>　
+  <input id="cb2" type="checkbox"><label for="cb2">Check2</label>　
+  <input id="cb3" type="checkbox"><label for="cb3">Check3</label>
+  </div>
+  <br />
+  <br />
+  <div class="wkRadio" style="background-color:#CCC; display:inline-flex; padding : 20px;">
+  <input id="rd1" type="radio" name="rd"><label for="rd1">Radio1</label>　
+  <input id="rd2" type="radio" name="rd"><label for="rd2">Radio2</label>　
+  <input id="rd3" type="radio" name="rd"><label for="rd3">Radio3</label>
+  </div>
+  <br />
+  <br />
+  <div style="background-color:#CCC; display:inline-flex; padding : 20px;">
+    <div><button id="wkBtn1">家</button></div>　
+    <div><button id="wkBtn2">鍵</button></div>　
+    <div><button id="wkBtn3">鞄</button></div>
+  </div>
+
+
+</body>
+</html>

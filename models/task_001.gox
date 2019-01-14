@@ -1,0 +1,39 @@
+package task
+
+import (
+//  "fmt"
+  "github.com/syndtr/goleveldb/leveldb"
+  "time"
+  "strconv"
+)
+
+
+type Task struct {
+    ID   int
+    Text string
+}
+
+type Tasks []Task
+
+type TaskRepository struct {
+}
+
+func NewTaskRepository() TaskRepository {
+    return TaskRepository{}
+}
+
+// データベースに一行登録する
+func (m TaskRepository) Create(text string) {
+  var ptime1 int
+
+  db, err := leveldb.OpenFile("./currentldb", nil)
+  if err == nil {
+    ptime1 = time.Now().Nanosecond()
+    db.Put([]byte(strconv.Itoa(ptime1)), []byte(text), nil)
+  } else {
+    panic(err)
+  }
+
+  defer db.Close()
+
+}
