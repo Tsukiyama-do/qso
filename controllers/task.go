@@ -61,7 +61,7 @@ func (c Task) SearchDB(s_callsign string, s_fr string, s_to string) *[]task.QSLs
     } else {
       f_chk = 0    // search by callsign
     }
-    log.Printf("Callsign : %s, From : %s, To : %s,flag :  %d\n", s_callsign, s_fr, s_to, f_chk)
+//    log.Printf("Callsign : %s, From : %s, To : %s,flag :  %d\n", s_callsign, s_fr, s_to, f_chk)
     qsl_sp := repo.Retrieve(s_callsign, s_fr, s_to, f_chk)
     return qsl_sp
 }
@@ -69,7 +69,7 @@ func (c Task) SearchDB(s_callsign string, s_fr string, s_to string) *[]task.QSLs
 func (c Task) UploadDB(s_callsign string, s_filename string) error {   // to register information of upload to database
 
   repo := task.NewTaskRepository()
-  log.Printf("UploadDB : Callsign : %s, Filename : %s\n", s_callsign, s_filename)
+//  log.Printf("UploadDB : Callsign : %s, Filename : %s\n", s_callsign, s_filename)
 
   qsl_sp := repo.InsertUpload(s_callsign, s_filename)
   return qsl_sp
