@@ -4,7 +4,7 @@ import (
   "strconv"
   "../models"
   "time"
-  "log"
+//  "log"
 )
 // idとテキストを保持する構造体
 type Task struct {
