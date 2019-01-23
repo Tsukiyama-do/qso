@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo /usr/lib/go/bin/go run main.go
+nohup go run main.go &
