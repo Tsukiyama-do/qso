@@ -9,6 +9,7 @@ import (
 //  "fmt"
   "log"
 //  "time"
+  "strings"
   _ "github.com/mattn/go-sqlite3"
 
 
@@ -83,7 +84,7 @@ func (m TaskRepository) Retrieve(con_callsign string, con_fr string, con_to stri
     checkErr(err)
 
     if f_chk == 0 {   // search by callsign
-      if callsign == con_callsign  {
+      if callsign == strings.ToUpper(con_callsign)  {
         log.Printf("id: %d, callsign: %s, datetime: %v, files: %s\n", id, callsign, datetime, files)
         qslv.ID = id
         qslv.Callsign = callsign
@@ -147,7 +148,7 @@ func (m TaskRepository) InsertUpload(con_callsign string, con_file string ) erro
   // データの挿入
   res, err := db.Exec(
     `INSERT INTO UPLOAD_FILES (ID, CALLSIGN, DATETIME, FILES) VALUES (?, ?, ?, ?)`,
-    i_timeu, con_callsign, d_time, con_file)
+    i_timeu, strings.ToUpper(con_callsign), d_time, con_file)
     if err != nil { return err }   // エラー時は、エラーを返却して抜ける
 
   // 挿入処理の結果からIDを取得

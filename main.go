@@ -32,6 +32,16 @@ type QSLstr struct{
 
 func main() {
 
+//  パラメータチェック
+    if len(os.Args) == 2 {
+      if os.Args[1] == "release" {
+        gin.SetMode(gin.ReleaseMode)
+      }
+    }
+
+//
+
+
     router := gin.Default()
     router.LoadHTMLGlob("views/*.tmpl")
     router.Static("/assets", "./public/assets")
