@@ -6,22 +6,12 @@ import (
   "time"
 //  "log"
 )
+
 // idとテキストを保持する構造体
 type Task struct {
     ID   int
     Text string
 }
-
-
-// QSLCARDS テーブルの構造
-/*
-type QSLstr struct{
-    ID int
-    Callsign string
-    Datetime string
-    Files string
-}
-*/
 
 func NewTask() Task {
     return Task{}

@@ -11,9 +11,7 @@ import (
 //  "time"
   "strings"
   _ "github.com/mattn/go-sqlite3"
-
-
-
+  "../env"
 )
 
 
@@ -38,25 +36,6 @@ type TaskRepository struct {
 func NewTaskRepository() TaskRepository {
     return TaskRepository{}
 }
-
-// データベースに一行登録する
-/*
-func (m TaskRepository) Create(text string) {
-  var ptime1 int
-
-  db, err := leveldb.OpenFile("./currentldb", nil)
-  if err == nil {
-    ptime1 = time.Now().Nanosecond()
-    db.Put([]byte(strconv.Itoa(ptime1)), []byte(text), nil)
-  } else {
-    panic(err)
-  }
-
-  defer db.Close()
-
-}
-*/
-
 
 
 
@@ -85,7 +64,7 @@ func (m TaskRepository) Retrieve(con_callsign string, con_fr string, con_to stri
 
     if f_chk == 0 {   // search by callsign
       if callsign == strings.ToUpper(con_callsign)  {
-        log.Printf("id: %d, callsign: %s, datetime: %v, files: %s\n", id, callsign, datetime, files)
+        if env.S_mode() { log.Printf("id: %d, callsign: %s, datetime: %v, files: %s\n", id, callsign, datetime, files) }
         qslv.ID = id
         qslv.Callsign = callsign
         qslv.Datetime = datetime.String()
@@ -99,10 +78,8 @@ func (m TaskRepository) Retrieve(con_callsign string, con_fr string, con_to stri
       t_fr, _ := time.Parse(t_fmt, con_fr)
       t_to, _ := time.Parse(t_fmt, con_to)
 
-//      log.Printf("t_fr : %v\n", t_fr)
-//      log.Printf("t_to : %v\n", t_to)
       if  (datetime.Unix() >= t_fr.Unix()) && (datetime.Unix() <= t_to.Unix()) {
-        log.Printf("id: %d, callsign: %s, datetime: %v, files: %s\n", id, callsign, datetime, files)
+        if env.S_mode() { log.Printf("id: %d, callsign: %s, datetime: %v, files: %s\n", id, callsign, datetime, files) }
         qslv.ID = id
         qslv.Callsign = callsign
         qslv.Datetime = datetime.String()
@@ -119,7 +96,7 @@ func (m TaskRepository) Retrieve(con_callsign string, con_fr string, con_to stri
     qslv.Datetime = ""
     qslv.Files = ""
     qsls = append(qsls, qslv)
-    log.Printf("Not found record")
+    if env.S_mode() { log.Printf("Not found record") }
   }
 
   return &qsls
@@ -155,7 +132,7 @@ func (m TaskRepository) InsertUpload(con_callsign string, con_file string ) erro
   id, err := res.LastInsertId()
     if err != nil { return err }   // エラー時は、エラーを返却して抜ける
 
-  log.Printf("id is %v \n", id)
+    if env.S_mode() { log.Printf("id is %v \n", id) }
 
   return nil
 

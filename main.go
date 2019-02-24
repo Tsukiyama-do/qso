@@ -6,6 +6,7 @@ import (
 	   "path/filepath"
     "github.com/gin-gonic/gin"
     "./controllers"
+    "./env"
     "os"
 //    simplejson "go-simplejson"
     "github.com/bitly/go-simplejson"
@@ -15,19 +16,12 @@ import (
 
 func init() {
     log.SetFlags(log.Lshortfile)
+
 }
 
 const DOWNLOADS_PATH = "./downloads/"
 const UPLOADS_PATH = "./uploads/"
 
-/*
-type QSLstr struct{
-    ID int
-    Callsign string
-    Datetime string
-    Files string
-}
-*/
 
 
 func main() {
@@ -36,9 +30,9 @@ func main() {
     if len(os.Args) == 2 {
       if os.Args[1] == "release" {
         gin.SetMode(gin.ReleaseMode)
+        env.S_mset(false)    // means release mode
       }
     }
-
 //
 
 
@@ -86,7 +80,7 @@ func main() {
 //        log.Println(bjson)
 //        if len(bjson) >= 0 {      // dummy if branch
 //        }
-        log.Printf("request - num of buf : %d\n", num)
+        if env.S_mode() { log.Printf("request - num of buf : %d\n", num)  }
         bjson,err := simplejson.NewJson(buf)
         if err != nil {
           log.Println("Error occured at JSON conversion.")
@@ -105,7 +99,9 @@ func main() {
         }
 
         for _, items := range *sl_callsign {
+          if env.S_mode() {
             log.Printf( `{ "No." : "` + strconv.Itoa(items.ID) + `" , "Callsign":  "` + items.Callsign + `" , "Date":  "` + items.Datetime + `" , "File":  "` + items.Files + `" },` )
+          }
         }
 
         if len(s_json_cal) > 0 {        //  文字列末尾の　, を削除している。
@@ -140,7 +136,7 @@ func main() {
         }else{
           s_n := strconv.Itoa(n)
           targetPath = targetPath + ".bk-" + string(s_n)
-          log.Printf("targetPath : %s\n　", targetPath)
+          if env.S_mode() { log.Printf("targetPath : %s\n　", targetPath) }
         }
       }
 
