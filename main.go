@@ -77,6 +77,25 @@ func main() {
 		c.File(targetPath)
 	})
 
+	// 認証ファイル提供のためのサンプル (一時的)
+	router.GET("/.well-known/pki-validation/:filename", func(c *gin.Context) {
+		fileName := c.Param("filename")
+		//      log.Printf("Hi, %s", fileName)
+		targetPath := DOWNLOADS_PATH + fileName
+		_, err := os.Stat(targetPath)
+		if err != nil {
+			c.String(403, "I am sorry, The file is not found yet.")
+			log.Println("I am sorry, The file is not found yet.")
+			return
+		}
+		//Seems this headers needed for some browsers (for example without this headers Chrome will download files as txt)
+		c.Header("Content-Description", "File Transfer")
+		c.Header("Content-Transfer-Encoding", "binary")
+		c.Header("Content-Disposition", "attachment; filename="+fileName)
+		c.Header("Content-Type", "text/plain")
+		c.File(targetPath)
+	})
+
 	// ダウンロード時のQSLカードの一覧を出力する検索
 	router.POST("/", func(c *gin.Context) {
 		buf := make([]byte, 2048)
@@ -179,10 +198,10 @@ func main() {
 
 	}) // END of router.POST
 
-	//	router.Run(":8080")
-	err := router.RunTLS(":8443", TLS_CRT, TLS_KEY)
-	if err != nil {
-		log.Fatal(err)
-	}
+	router.Run(":8080")
+	//	err := router.RunTLS(":8443", TLS_CRT, TLS_KEY)
+	//	if err != nil {
+	//		log.Fatal(err)
+	//	}
 
 }
