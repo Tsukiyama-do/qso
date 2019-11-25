@@ -26,8 +26,8 @@ func init() {
 const DOWNLOADS_PATH = "./downloads/"
 const UPLOADS_PATH = "./uploads/"
 
-const TLS_CRT = "./private/https-jj1pow-com-001.crt"
-const TLS_KEY = "./private/https-jj1pow-com-001.key"
+const TLS_CRT = "./private/https-jj1pow-com-003.crt"
+const TLS_KEY = "./private/https-jj1pow-com-003.key"
 
 func main() {
 
@@ -74,25 +74,6 @@ func main() {
 		c.Header("Content-Transfer-Encoding", "binary")
 		c.Header("Content-Disposition", "attachment; filename="+fileName)
 		c.Header("Content-Type", "application/pdf")
-		c.File(targetPath)
-	})
-
-	// 認証ファイル提供のためのサンプル (一時的)
-	router.GET("/.well-known/pki-validation/:filename", func(c *gin.Context) {
-		fileName := c.Param("filename")
-		//      log.Printf("Hi, %s", fileName)
-		targetPath := DOWNLOADS_PATH + fileName
-		_, err := os.Stat(targetPath)
-		if err != nil {
-			c.String(403, "I am sorry, The file is not found yet.")
-			log.Println("I am sorry, The file is not found yet.")
-			return
-		}
-		//Seems this headers needed for some browsers (for example without this headers Chrome will download files as txt)
-		c.Header("Content-Description", "File Transfer")
-		c.Header("Content-Transfer-Encoding", "binary")
-		c.Header("Content-Disposition", "attachment; filename="+fileName)
-		c.Header("Content-Type", "text/plain")
 		c.File(targetPath)
 	})
 
@@ -198,10 +179,10 @@ func main() {
 
 	}) // END of router.POST
 
-	router.Run(":8080")
-	//	err := router.RunTLS(":8443", TLS_CRT, TLS_KEY)
-	//	if err != nil {
-	//		log.Fatal(err)
-	//	}
+	// router.Run(":8080")
+	err := router.RunTLS(":8443", TLS_CRT, TLS_KEY)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }
